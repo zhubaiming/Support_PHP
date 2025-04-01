@@ -1,0 +1,48 @@
+name: Auto Create Tag on Merge
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 jq 用来读取文件
+        run: sudo apt-get install -y jq
+
+      - name: 从 composer.json 读取版本号
+        id: get_version_form_composer
+        run: echo "VERSION=$(jq -r '.version' composer.json)" >> $GITHUB_ENV
+
+      - name: 检查版本号是否存在
+        id: check_tag_exists
+        run: |
+          TAG_EXISTS=$(git ls-remote --tags origin refs/tags/${{ env.VERSION }} | wc -l)
+          if [ "$TAG_EXISTS" -ne 0 ]; then
+            echo -e "\033[031mTag ${{ env.VERSION }} 已存在，停止创建\033[0m"
+            echo "SKIP=true" >> $GITHUB_ENV
+            exit 1
+          else
+            echo -e "\033[032mTag ${{ env.VERSION }} 不存在，准备打标记\033[0m"
+            echo "SKIP=false" >> $GITHUB_ENV
+          fi
+
+      - name: 设置 Git 用户信息
+        run: |
+          git config --global user.email "hub.zhubaiming@gmail.com"
+          git config --global user.name "zhubaiming"
+
+      - name: 使用版本号打标记
+        if: env.SKIP == 'false'
+        run: |
+          git tag -a ${{ env.VERSION }} -m "Release ${{ env.VERSION }}"
+          git push origin ${{ env.VERSION }}
+          echo -e "\033[32m标记 Tag ${{ env.VERSION }} 成功\033[0m"
