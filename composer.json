@@ -1,0 +1,17 @@
+{
+    "name": "hongyi/support",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhubaiming",
+            "email": "other.zhubaiming@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hongyi\\Support\\": "src/"
+        }
+    },
+    "require": {}
+}
