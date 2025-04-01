@@ -1,17 +1,18 @@
 {
-    "name": "hongyi/support",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "zhubaiming",
-            "email": "other.zhubaiming@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Hongyi\\Support\\": "src/"
-        }
-    },
-    "require": {}
+  "name": "hongyi/support",
+  "type": "library",
+  "license": "MIT",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "zhubaiming",
+      "email": "other.zhubaiming@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Hongyi\\Support\\": "src/"
+    }
+  },
+  "require": {}
 }
