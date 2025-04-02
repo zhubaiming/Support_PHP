@@ -157,7 +157,8 @@ class Pipeline
 //                    $pipe = $this->getContainer()->make($name); // laravel
 //                    $pipe = $this->getContainer()->get($name);  // hyperf
                     try {
-                        $pipe = (new \ReflectionClass($pipe))->newInstance($name);
+//                        $pipe = (new \ReflectionClass($pipe))->newInstance($name);
+                        $pipe = (new \ReflectionClass($pipe))->newInstanceWithoutConstructor();
                     } catch (\ReflectionException $e) {
                         $pipe = $pipe;
                     }
